@@ -29,7 +29,8 @@ public class DistributedApp {
 
         myTopic.addMessage(message.getMessageContent(), 0);
 
-        myTopic.getMessage(0, message.getOffset());
+        Consumer consumer = new Consumer(0);
+        consumer.processMessage(myTopic);
 
     }
 }
