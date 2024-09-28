@@ -73,7 +73,7 @@ public class Node {
         }
     }
 
-    public void addOtherNode(Node node) {
+    public void addToConnectedNodes(Node node) {
         connectedNodes.add(node);
     }
 }

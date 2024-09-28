@@ -23,23 +23,22 @@ public class Partition {
         this.currentOffset = 0;
     }
 
-    public void addMessage(String str, List<Node> replicasNodeList) {
+    public void addMessage(Message message, List<Node> replicasNodeList) {
         if (leaderNode.isLeader()) {
-            Message message = new Message(str, currentOffset, retentionTimeMillis);
             leaderNode.addMessage(message);
             messageQueue.offer(message);
             replicas.addAll(replicasNodeList);
             addOtherNodes(message);
             currentOffset++;
-            controlAndRemove(str);
+          //  controlAndRemove(str);
+            System.out.println("added message : " + message.getMessageContent() + " || offset : " + message.getOffset());
         } else {
             Optional<Node> leaderNode = findLeader();
-            Message message = new Message(str, currentOffset, retentionTimeMillis);
             leaderNode.ifPresent(leader -> leader.addMessage(message));
             messageQueue.offer(message);
             addOtherNodes(message);
             currentOffset++;
-            controlAndRemove(str);
+      //      controlAndRemove(str);
         }
     }
 

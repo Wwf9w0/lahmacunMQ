@@ -7,30 +7,30 @@ public class DistributedApp {
         Node node2 = new Node("Node 2", false, retentionTimeMillis);
 
 
-        node1.addOtherNode(node2);
-
-        node2.addOtherNode(node1);
-
-
+        node1.addToConnectedNodes(node2);
+        node2.addToConnectedNodes(node1);
 
         String content = "message";
+        String content2 = "message2";
+        String content3 = "message3";
 
         Message message = new Message(content,0L, retentionTimeMillis);
-        Message message2 = new Message(content,1L, retentionTimeMillis);
-        Message message3 = new Message(content,2L, retentionTimeMillis);
+        Message message2 = new Message(content2,1L, retentionTimeMillis);
+        Message message3 = new Message(content3,2L, retentionTimeMillis);
 
-        int partitionId1 = PartitioningStrategy.getPartitionForKey(message.getMessageContent(), 3);
-        int partitionId2 = PartitioningStrategy.getPartitionForKey(message2.getMessageContent(), 3);
-        int partitionId3 = PartitioningStrategy.getPartitionForKey(message3.getMessageContent(), 3);
-
-
-        Topic myTopic = new Topic("MyTopic", 2, node1, retentionTimeMillis);
+       // int partitionId1 = PartitioningStrategy.getPartitionForKey(message.getMessageContent(), 3);
+       // int partitionId2 = PartitioningStrategy.getPartitionForKey(message2.getMessageContent(), 3);
+       // int partitionId3 = PartitioningStrategy.getPartitionForKey(message3.getMessageContent(), 3);
 
 
-        myTopic.addMessage(message.getMessageContent(), 0);
+        Topic myTopic = new Topic("MyTopic", 3, node1, retentionTimeMillis);
+
+
+        myTopic.addMessage(message, 0);
+        myTopic.addMessage(message2, 1);
+        myTopic.addMessage(message3, 2);
 
         Consumer consumer = new Consumer(0);
         consumer.processMessage(myTopic);
-
     }
 }

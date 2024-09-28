@@ -17,19 +17,18 @@ public class Topic {
         }
     }
 
-    public void addMessage(String messageContent, int partitionId) {
+    public void addMessage(Message message, int partitionId) {
         Partition currentPartition = partitions.get(partitionId);
         List<Partition> replicasNodeList = new ArrayList<>();
         for (Map.Entry<Integer, Partition> entry : partitions.entrySet()) {
             Partition mapPartition = entry.getValue();
             if (currentPartition.getPartitionId() != mapPartition.getPartitionId()) {
-                //TODO ikisini de aynı node'a ekliyor diğer node boş kalıyor
                 replicasNodeList.add(mapPartition);
             }
         }
         if (currentPartition != null) {
             List<Node> nodes = replicasNodeList.stream().map(Partition::getLeaderNode).collect(Collectors.toList());
-            currentPartition.addMessage(messageContent, nodes);
+            currentPartition.addMessage(message, nodes);
         } else {
             System.out.println("Invalid partition ID: " + partitionId);
         }
