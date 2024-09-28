@@ -45,11 +45,11 @@ public class Node {
 
 
     public void addMessage(Message message) {
-            messageQueue.offer(message);
-            addRemoteNodes(message);
+        messageQueue.offer(message);
+        addRemoteNodes(message);
     }
 
-    public void replicasAddMessage(Message message){
+    public void replicasAddMessage(Message message) {
         addRemoteNodes(message);
 
     }

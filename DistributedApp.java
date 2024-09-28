@@ -19,13 +19,13 @@ public class DistributedApp {
         String content2 = "message2";
         String content3 = "message3";
 
-        Message message = new Message(content,0L, retentionTimeMillis);
-        Message message2 = new Message(content2,1L, retentionTimeMillis);
-        Message message3 = new Message(content3,2L, retentionTimeMillis);
+        Message message = new Message(content, 0L, retentionTimeMillis);
+        Message message2 = new Message(content2, 1L, retentionTimeMillis);
+        Message message3 = new Message(content3, 2L, retentionTimeMillis);
 
-       // int partitionId1 = PartitioningStrategy.getPartitionForKey(message.getMessageContent(), 3);
-       // int partitionId2 = PartitioningStrategy.getPartitionForKey(message2.getMessageContent(), 3);
-       // int partitionId3 = PartitioningStrategy.getPartitionForKey(message3.getMessageContent(), 3);
+        // int partitionId1 = PartitioningStrategy.getPartitionForKey(message.getMessageContent(), 3);
+        // int partitionId2 = PartitioningStrategy.getPartitionForKey(message2.getMessageContent(), 3);
+        // int partitionId3 = PartitioningStrategy.getPartitionForKey(message3.getMessageContent(), 3);
 
 
         Topic myTopic = new Topic("MyTopic", 3, node1, retentionTimeMillis);
