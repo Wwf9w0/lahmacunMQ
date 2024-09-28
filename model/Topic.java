@@ -1,3 +1,8 @@
+package model;
+
+import core.Node;
+import core.Partition;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

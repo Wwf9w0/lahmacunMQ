@@ -1,3 +1,7 @@
+package core;
+
+import model.Message;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;

@@ -1,3 +1,8 @@
+import consumer.Consumer;
+import core.Node;
+import model.Message;
+import model.Topic;
+
 public class DistributedApp {
     public static void main(String[] args) throws InterruptedException {
 
