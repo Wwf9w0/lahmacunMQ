@@ -1,53 +1,79 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class Node {
     private String nodeName;
+
+    private Queue<Message> messageQueue;
     private boolean isLeader;
     private boolean alive;
     private List<Node> connectedNodes;
 
-    public Node(String nodeName, boolean isLeader) {
+    private long retentionTimeMillis;
+
+
+    public Node(String nodeName, boolean isLeader, long retentionTimeMillis) {
         this.nodeName = nodeName;
         this.isLeader = isLeader;
         this.alive = true;
         this.connectedNodes = new ArrayList<>();
+        this.messageQueue = new LinkedList<>();
+        this.retentionTimeMillis = retentionTimeMillis;
     }
 
-    public boolean isLeader() {
-        return isLeader;
-    }
-
-    public void setLeader(boolean leader) {
-        isLeader = leader;
+    public String getNodeName() {
+        return nodeName;
     }
 
     public boolean isAlive() {
         return alive;
     }
 
-    public void setAlive(boolean alive) {
-        this.alive = alive;
+    public boolean isLeader() {
+        return isLeader;
     }
 
-    public void handleLeaderElection(List<Node> nodes) {
-        if (!alive && isLeader) {
-            System.out.println(nodeName + "leader node unsuccessfully.");
-        }
+    public long getRetentionTimeMillis() {
+        return retentionTimeMillis;
     }
 
-    private void electNewLeader(List<Node> nodes) {
-        for (Node node : nodes) {
-            if (node.isAlive() && !node.isLeader()) {
-                node.setLeader(true);
-                this.setLeader(false);
-                System.out.println(node.nodeName + "is the new leader.");
-                break;
+
+    public void addMessage(Message message) {
+            messageQueue.offer(message);
+            addRemoteNodes(message);
+    }
+
+    public void replicasAddMessage(Message message){
+        addRemoteNodes(message);
+
+    }
+
+    public void addRemoteNodes(Message message) {
+        for (Node node : connectedNodes) {
+            if (!node.messageQueue.contains(message)) {
+                node.addMessage(message);
             }
         }
     }
 
-    public void addNode(Node node) {
+    public void removeThisNode(Message message) {
+        if (messageQueue.contains(message)) {
+            messageQueue.remove(message);
+            removeConnectedQueue(message);
+        }
+    }
+
+    public void removeConnectedQueue(Message message) {
+        for (Node node : connectedNodes) {
+            if (node.messageQueue.contains(message)) {
+                node.removeThisNode(message);
+            }
+        }
+    }
+
+    public void addOtherNode(Node node) {
         connectedNodes.add(node);
     }
 }
