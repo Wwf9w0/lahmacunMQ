@@ -34,7 +34,7 @@ public class Partition {
             replicas.addAll(replicasNodeList);
             addOtherNodes(message);
             currentOffset++;
-          //  controlAndRemove(str);
+            //  controlAndRemove(str);
             System.out.println("added message : " + message.getMessageContent() + " || offset : " + message.getOffset());
         } else {
             Optional<Node> leaderNode = findLeader();
@@ -42,11 +42,11 @@ public class Partition {
             messageQueue.offer(message);
             addOtherNodes(message);
             currentOffset++;
-      //      controlAndRemove(str);
+            //      controlAndRemove(str);
         }
     }
 
-    public Message getMessage(long offset){
+    public Message getMessage(long offset) {
         for (Message message : messageQueue) {
             if (message.getOffset() == offset) {
                 return message;
@@ -55,11 +55,11 @@ public class Partition {
         return null;
     }
 
-    public int getPartitionId(){
+    public int getPartitionId() {
         return partitionId;
     }
 
-    public Node getLeaderNode(){
+    public Node getLeaderNode() {
         return leaderNode;
     }
 
@@ -95,7 +95,7 @@ public class Partition {
         }
     }
 
-    private void removeReplicasPartitionsThisMessage(Message message){
+    private void removeReplicasPartitionsThisMessage(Message message) {
         for (Node node : replicas) {
             node.removeThisNode(message);
         }
