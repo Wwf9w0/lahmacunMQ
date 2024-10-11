@@ -28,4 +28,4 @@ partitions: List of partitions belonging to the topic.
 Consumer Class: Used to process messages.
 
 partitionId: The partition to which the consumer is connected.
-DistributedKafkaApp Class: The main entry point of the application. This is where nodes are created, messages are added and the consumer and message processing operations are performed.
+DistributedApp Class: The main entry point of the application. This is where nodes are created, messages are added and the consumer and message processing operations are performed.
